@@ -4,36 +4,18 @@ from sklearn.naive_bayes import MultinomialNB
 
 
 class BigBrainMachineLearning:
-    def __init__(self, train_data: list, train_validation: list):
-        self.train_list = train_data
+    def __init__(self, class_ids: list, sequences: list):
+        self.class_ids = class_ids
 
         self.count_vect = CountVectorizer()
-        self.tfidf_transformer = TfidfTransformer()
 
-        self.train_validation = train_validation
+        self.sequences = sequences
         self.classifier = self.train_module()
-
 
     def train_module(self):
         # Vult met vectoren met eigenschappen
-        X_train_counts = self.count_vect.fit_transform(self.train_validation)
-
-        # dit heeft te maken met het downscalen van de data. Vooral bij grote documenten is dit nodig.
-        # maar de documenatie heeft het hierin gezet dus ik doe het ook.
-        # lege transformer word aangemaakt
-        # Vult vectoren met gedownscalde shit
-        X_train_tfidf = self.tfidf_transformer.fit_transform(X_train_counts)
-
-        classifier = MultinomialNB().fit(X_train_tfidf, self.train_list)
-
-        #
-        # classifier = Pipeline([
-        #     ("vect", CountVectorizer()),
-        #     ("tfidf", TfidfTransformer),
-        #     ("clf", MultinomialNB()),
-        # ])
-        # classifier.fit(self.train_list, self.train_validation)
-
+        x_train_counts = self.count_vect.fit_transform(self.sequences)
+        classifier = MultinomialNB().fit(x_train_counts, self.class_ids)
 
         return classifier
 
@@ -42,10 +24,6 @@ class BigBrainMachineLearning:
 
     def get_count_vect(self):
         return self.count_vect
-
-    def get_tfidf_transformer(self):
-        return self.tfidf_transformer
-
 
 
 #
@@ -139,5 +117,3 @@ class BigBrainMachineLearning:
 #
 # plt.show()
 #
-
-

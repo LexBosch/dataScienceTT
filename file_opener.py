@@ -1,43 +1,32 @@
-from protein_seq_input import ProteinClassification
 from plzwerk import BigBrainMachineLearning
-import numpy as np
-from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import MultinomialNB
+from protein_seq_input import ProteinClassification
 
 
 def main():
     data_segments = open_file("train_set.fasta")
     segment_objects = call_new_object(data_segments)
-    print("ja")
+    class_ids = []
+    sequences = []
 
-    varify_list = []
-    varify_data = []
     for single_object in segment_objects:
-        varify_list.append(single_object.get_type())
-        varify_data.append(single_object.get_sequence())
+        class_ids.append(single_object.get_type())
+        sequences.append(single_object.get_sequence())
 
-    new_classifier = BigBrainMachineLearning(varify_list, varify_data)
+    new_classifier = BigBrainMachineLearning(class_ids, sequences)
 
     benchmark_data_segments = open_file("benchmark_set.fasta")
     benchmark_segment_objects = call_new_object(benchmark_data_segments)
-    benchmark_varify_list = []
-    benchmark_varify_data = []
+    benchmark_verify_list = []
+    benchmark_verify_data = []
+
     for single_object in benchmark_segment_objects:
-        benchmark_varify_list.append(single_object.get_type())
-        benchmark_varify_data.append(single_object.get_sequence())
+        benchmark_verify_list.append(single_object.get_type())
+        benchmark_verify_data.append(single_object.get_sequence())
 
+    x_new_counts = new_classifier.get_count_vect().transform(benchmark_verify_data)
 
-
-    X_new_counts = new_classifier.get_count_vect().transform(benchmark_varify_data)
-
-    plx = new_classifier.get_classifier().score(X_new_counts, benchmark_varify_list)
-
-
-    print("asdf")
-
-
-
+    plx = new_classifier.get_classifier().score(x_new_counts, benchmark_verify_list)
+    ...
 
 
 def open_file(file_name) -> list:
