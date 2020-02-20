@@ -1,6 +1,12 @@
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
+from time import time
+from sklearn import preprocessing
+import numpy as np
+from sklearn.svm import SVC
+from math import fsum
+import pickle
 
 
 class BigBrainMachineLearning:
@@ -10,13 +16,58 @@ class BigBrainMachineLearning:
         self.count_vect = CountVectorizer()
 
         self.sequences = sequences
+
+
+        self.arbitrair = {"R": -4.5,
+                            "K":-3.9,
+                            "N":-3.5,
+                            "D":-3.5,
+                            "Q":-3.5,
+                            "E":-3.5,
+                            "H":-3.2,
+                            "P":-1.6,
+                            "Y":-1.3,
+                            "W":-0.9,
+                            "S":-0.8,
+                            "T":-0.7,
+                            "G":-0.4,
+                            "A":1.8,
+                            "M":1.9,
+                            "C":2.5,
+                            "F":2.8,
+                            "L":3.8,
+                            "V":4.2,
+                            "I":4.5}
+
+
         self.classifier = self.train_module()
+
 
     def train_module(self):
         # Vult met vectoren met eigenschappen
         x_train_counts = self.count_vect.fit_transform(self.sequences)
-        classifier = MultinomialNB().fit(x_train_counts, self.class_ids)
 
+
+        le = preprocessing.LabelEncoder()
+
+        ja = []
+        for single_sequence in self.sequences:
+            ja1 = []
+            single_sequence = single_sequence[0:40]
+            for i in range(0, (len(single_sequence)-5)):
+                sub_seq = single_sequence[i:i+5]
+                total_score = sum(self.arbitrair[amino] for amino in sub_seq)
+                ja1.append(total_score)
+            ja.append(ja1)
+        time()
+
+
+
+        plzwerk = SVC(kernel="linear")
+        plzwerk.fit(ja, self.class_ids)
+        time()
+        with open('filename.pickle', 'wb') as handle:
+            pickle.dump(plzwerk, handle, protocol=pickle.HIGHEST_PROTOCOL)
         return classifier
 
     def get_classifier(self):

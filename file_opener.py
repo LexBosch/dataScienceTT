@@ -26,7 +26,7 @@ def main():
     x_new_counts = new_classifier.get_count_vect().transform(benchmark_verify_data)
 
     plx = new_classifier.get_classifier().score(x_new_counts, benchmark_verify_list)
-    ...
+
 
 
 def open_file(file_name) -> list:
