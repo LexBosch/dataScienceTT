@@ -13,9 +13,17 @@ def main():
         class_ids.append(single_object.get_type())
         sequences.append(single_object.get_sequence())
 
-    # new_classifier = BigBrainMachineLearning(class_ids, sequences)
+    for i in range(len(class_ids)):
+        if class_ids[i] != "NO_SP":
+            class_ids[i] = "SP"
 
-    new_classifier = pickle.load( open( "filename.pickle", "rb" ) )
+    for class_id in class_ids:
+        if class_id != "SP" and class_id != "NO_SP":
+            print(class_id)
+
+    new_classifier = BigBrainMachineLearning(class_ids, sequences)
+
+    # new_classifier = pickle.load( open( "filename.pickle", "rb" ) )
 
     benchmark_data_segments = open_file("benchmark_set.fasta")
     benchmark_segment_objects = call_new_object(benchmark_data_segments)
@@ -28,10 +36,6 @@ def main():
 
     uglylistplz = plzwerk.get_ugly_list(benchmark_verify_data)
     plx = new_classifier.score(uglylistplz, benchmark_verify_list)
-    print(benchmark_verify_list[-100:-1])
-    for seq in benchmark_verify_list:
-        if seq != "NO_SP":
-            print(seq)
     print("asdfasdf")
 
     return new_classifier, class_ids, uglylistplz, benchmark_verify_list
