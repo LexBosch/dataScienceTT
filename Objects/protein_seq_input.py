@@ -1,3 +1,9 @@
+"""
+Author: AI experts
+Date: 05-03-20
+"""
+
+
 class ProteinClassification:
     def __init__(self, header: str, sequence: str, classification: str):
         self.sequence_list = sequence

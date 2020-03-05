@@ -1,3 +1,8 @@
+"""
+Author: AI experts
+Date: 05-03-20
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -9,7 +14,7 @@ import file_opener
 
 
 def main():
-    new_classifier, class_ids, uglylistplz, benchmark_verify_list = file_opener.main()
+    new_classifier, class_ids, uglylistplz, benchmark_verify_list = file_opener.read_and_format_trainset()
 
     # import some data to play with
     # iris = datasets.load_iris()
