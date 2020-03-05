@@ -31,11 +31,12 @@ def get_ugly_list(sequences):
                       "V": 4.2,
                       "I": 4.5}
     ja = []
+    groote_van_segment = 10
     for single_sequence in sequences:
         ja1 = []
         single_sequence = single_sequence[0:40]
-        for i in range(0, (len(single_sequence) - 5)):
-            sub_seq = single_sequence[i:i + 5]
+        for i in range(0, (len(single_sequence) - groote_van_segment)):
+            sub_seq = single_sequence[i:i + groote_van_segment]
             total_score = round(sum(arbitrair[amino] for amino in sub_seq), 2)
             ja1.append(total_score)
         ja.append(ja1)
@@ -65,9 +66,8 @@ class BigBrainMachineLearning:
         plzwerk = SVC(kernel="linear")
         plzwerk.fit(ja, self.class_ids)
         time()
-        with open('filename.pickle', 'wb') as handle:
+        with open('filename3.pickle', 'wb') as handle:
             pickle.dump(plzwerk, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        return classifier
 
     def get_classifier(self):
         return self.classifier
