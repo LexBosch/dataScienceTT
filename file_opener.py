@@ -28,9 +28,13 @@ def main():
 
     uglylistplz = plzwerk.get_ugly_list(benchmark_verify_data)
     plx = new_classifier.score(uglylistplz, benchmark_verify_list)
-    confusion
-
+    print(benchmark_verify_list[-100:-1])
+    for seq in benchmark_verify_list:
+        if seq != "NO_SP":
+            print(seq)
     print("asdfasdf")
+
+    return new_classifier, class_ids, uglylistplz, benchmark_verify_list
 
 
 def open_file(file_name) -> list:
