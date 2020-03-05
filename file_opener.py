@@ -1,5 +1,6 @@
-from plzwerk import BigBrainMachineLearning
+import plzwerk
 from protein_seq_input import ProteinClassification
+import pickle
 
 
 def main():
@@ -12,7 +13,9 @@ def main():
         class_ids.append(single_object.get_type())
         sequences.append(single_object.get_sequence())
 
-    new_classifier = BigBrainMachineLearning(class_ids, sequences)
+    # new_classifier = BigBrainMachineLearning(class_ids, sequences)
+
+    new_classifier = pickle.load( open( "filename.pickle", "rb" ) )
 
     benchmark_data_segments = open_file("benchmark_set.fasta")
     benchmark_segment_objects = call_new_object(benchmark_data_segments)
@@ -23,10 +26,11 @@ def main():
         benchmark_verify_list.append(single_object.get_type())
         benchmark_verify_data.append(single_object.get_sequence())
 
-    x_new_counts = new_classifier.get_count_vect().transform(benchmark_verify_data)
+    uglylistplz = plzwerk.get_ugly_list(benchmark_verify_data)
+    plx = new_classifier.score(uglylistplz, benchmark_verify_list)
+    confusion
 
-    plx = new_classifier.get_classifier().score(x_new_counts, benchmark_verify_list)
-
+    print("asdfasdf")
 
 
 def open_file(file_name) -> list:
