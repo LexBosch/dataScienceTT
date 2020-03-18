@@ -1,54 +1,22 @@
+"""Script to add weights to protein sequences based on various sequence attributes.
+
+Author: Cas van Rijbroek, Lex bosch, Sophie Hospel
+Date: 18-03-20
 """
-Author: AI experts
-Date: 05-03-20
-"""
+import json
 
 
 def get_score_list(sequences):
-    arbitrair = {"R": -4.5,
-                 "K": -3.9,
-                 "N": -3.5,
-                 "D": -3.5,
-                 "Q": -3.5,
-                 "E": -3.5,
-                 "H": -3.2,
-                 "P": -1.6,
-                 "Y": -1.3,
-                 "W": -0.9,
-                 "S": -0.8,
-                 "T": -0.7,
-                 "G": -0.4,
-                 "A": 1.8,
-                 "M": 1.9,
-                 "C": 2.5,
-                 "F": 2.8,
-                 "L": 3.8,
-                 "V": 4.2,
-                 "I": 4.5}
-
-    arbitrair_polair = {
-        "A": 6.00,
-        "R": 10.76,
-        "N": 5.41,
-        "D": 2.77,
-        "C": 5.07,
-        "E": 3.22,
-        "Q": 5.65,
-        "G": 5.97,
-        "H": 7.59,
-        "I": 6.02,
-        "L": 5.98,
-        "K": 9.74,
-        "M": 5.74,
-        "F": 5.48,
-        "P": 6.3,
-        "U": 5.68,
-        "S": 5.68,
-        "T": 5.6,
-        "W": 5.89,
-        "Y": 5.66,
-        "V": 5.96
-    }
+    """Adds weights to sequences.
+    
+    :param sequences: List of protein sequences.
+    :return: List of weighted protein sequences.
+    """
+    with open("scores.json", "r") as input_files:
+        scores = json.load(input_files)
+    
+    arbitrair = scores["arbitrair"]
+    arbitrair_polair = scores["arbitrair_polair"]
 
     all_scores_list = []
     segment_size = 10
@@ -61,4 +29,5 @@ def get_score_list(sequences):
             total_score = round(sum(arbitrair[amino] for amino in sub_seq), 2)
             score.append(total_score)
         all_scores_list.append(score)
+
     return all_scores_list
