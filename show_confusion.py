@@ -10,11 +10,11 @@ from sklearn import svm, datasets
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import plot_confusion_matrix
 
-import file_opener
+import main
 
 
 def main():
-    new_classifier, class_ids, uglylistplz, benchmark_verify_list = file_opener.read_and_format_trainset()
+    new_classifier, class_ids, uglylistplz, benchmark_verify_list = main.read_and_format_trainset()
 
     # import some data to play with
     # iris = datasets.load_iris()

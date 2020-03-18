@@ -5,6 +5,11 @@ Date: 05-03-20
 
 
 class ProteinClassification:
+    """
+    Class which orders information from header, sequence and classification
+    into objects for further use. Splits header for necessarily information.
+    """
+
     def __init__(self, header: str, sequence: str, classification: str):
         self.sequence_list = sequence
         self.classification = classification

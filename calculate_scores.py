@@ -4,7 +4,7 @@ Date: 05-03-20
 """
 
 
-def get_ugly_list(sequences):
+def get_score_list(sequences):
     arbitrair = {"R": -4.5,
                  "K": -3.9,
                  "N": -3.5,
@@ -50,14 +50,15 @@ def get_ugly_list(sequences):
         "V": 5.96
     }
 
-    ja = []
-    groote_van_segment = 10
+    all_scores_list = []
+    segment_size = 10
+
     for single_sequence in sequences:
-        ja1 = []
+        score = []
         single_sequence = single_sequence[0:40]
-        for i in range(0, (len(single_sequence) - groote_van_segment)):
-            sub_seq = single_sequence[i:i + groote_van_segment]
+        for i in range(0, (len(single_sequence) - segment_size)):
+            sub_seq = single_sequence[i:i + segment_size]
             total_score = round(sum(arbitrair[amino] for amino in sub_seq), 2)
-            ja1.append(total_score)
-        ja.append(ja1)
-    return ja
+            score.append(total_score)
+        all_scores_list.append(score)
+    return all_scores_list
